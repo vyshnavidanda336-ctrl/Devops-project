@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t vyshnavidanda336/devops-app:v4 .'
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                bat 'docker push vyshnavidanda336/devops-app:v4'
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                bat 'kubectl set image deployment/devops-app-deployment devops-app=vyshnavidanda336/devops-app:v4'
+            }
+        }
+    }
+}
