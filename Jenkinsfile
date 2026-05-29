@@ -2,30 +2,22 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Checkout') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Code pulled from GitHub'
+                sh 'docker build -t vyshnavidanda336/devops-app:v5 .'
             }
         }
 
-        stage('Build') {
+        stage('Push Docker Image') {
             steps {
-                echo 'Building Docker image'
-            }
-        }
-
-        stage('Push') {
-            steps {
-                echo 'Pushing Docker image'
+                sh 'docker push vyshnavidanda336/devops-app:v5'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying to Kubernetes'
+                echo 'Next: deploy v5 image to Kubernetes'
             }
         }
-
     }
 }
